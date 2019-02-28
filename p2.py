@@ -2,39 +2,37 @@
 """
 Spyder Editor
 
-This is a temporary script file.
+@creator : anshulTalati
 """
 
+# Import all the library , numpy is used for matrix operations and PIl is used for image to pixel array conversion and vice versa  
 from PIL import Image
-im = Image.open('ruler.512.tiff')
-#im.show()
-
-#import math
 import numpy as np
+
+# Reading the Image into Matrix.
+im = Image.open('ruler.512.tiff')
 imageArray = np.array(im)
-#imageArray.shape
-#imageArray.size
 
-#imageArray = np.array([[2,4],[1,3],[0,0],[0,0]])
-print imageArray 
+# Taking the input of Rank from the user for image Regeneration.
+rank = int(input("Please Enter the value of rank you to use to generate the image \n ") )
 
-imageArray_T = imageArray.transpose()
- 
-print imageArray_T
+# Calling svd function of nupy to calcuate the u, s and vtranspose.
+u , s, vh = np.linalg.svd(imageArray)
 
-w, v = np.linalg.eig(np.dot(imageArray, imageArray_T))
+# modifing the S-matrix acc. to the Given Rank and diagonal matrix
+s = s[:rank]
+smat = np.diag(s)
 
-x, y = np.linalg.eig(np.dot(imageArray_T, imageArray))
+# Applying the rank to Matrices u and v
+u = u[:,:rank]
+vh = vh[:rank,:]
 
-z= np.sqrt(w)
 
-#S= np.array(z)
-print v.shape
-print y.shape 
-print z.shape
+# matrix multiplication and generating the array for the image generation 
+umuls= np.dot(u, smat )
+R = np.dot(np.dot(u, smat ),vh )
+print R.shape
 
-R = np.dot(v, z, y)
-
-#
-#mage.fromarray(imarray)
-#<Image.Image image mode=L size=330x44 at 0x2786518>
+# Generation Image from the Array.
+im1 = Image.fromarray(np.uint8(R),'L')
+im1.show()
