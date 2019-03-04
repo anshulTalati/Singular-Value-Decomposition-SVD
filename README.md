@@ -11,6 +11,6 @@ Note :- The svd function of numpy outputs
         * 1)	Vtranspose and not matrix V. So, there is no need for taking the transpose of the matrix 
         * 2)	Smatrix obtained is as column matrix which is then taken according to the rank provided by the user and converted into a                    diagonal matrix (using diag() function of numpy ). The Elements of Smatrix is such that the element at (0,0) is the largest                and decreases as we traverse down the diagonal. 
 
-* 4.	Results:
+ 4.	Results:
 The output screen ask user to provide the factor(rank) for regeneration. Once the user inputs the rank the program calculates the regeneration matrix and displays the image for that particular rank.
 Note:- Install the numpy and pillow library for your version of python.
